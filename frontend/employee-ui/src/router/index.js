@@ -5,7 +5,7 @@ import AboutView from '../views/AboutView.vue'
 import EmployeesView from '@/views/EmployeesView.vue'
 import EmployeeAddView from '@/views/EmployeeAddView.vue'
 import EmployeeEditView from '@/views/EmployeeEditView.vue'
-import LoginView from '@/views/ LoginView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
