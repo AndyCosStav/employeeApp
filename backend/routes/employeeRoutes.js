@@ -19,7 +19,7 @@ router.use(authenticateToken)
 router.get('/employees', authorizeRoles('admin'),  getAllEmployeesController)
 router.get('/employee/:id', authorizeRoles('admin'),  getEmployeeByIdController)
 
-// Write routes 
+// Write routes (todo make admin and manager only apis)    
 router.post('/employee', authorizeRoles('admin'), createEmployeeController)
 router.patch('/employee/:id', authorizeRoles('admin'), updateEmployeeByIdController)
 router.delete('/employee/:id', authorizeRoles('admin'), deleteEmployeeByIdController)
