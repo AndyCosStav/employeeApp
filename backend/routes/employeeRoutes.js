@@ -15,7 +15,7 @@ const router = express.Router()
 
 router.use(authenticateToken)
 
-// Read routes 
+// Read routes  
 router.get('/employees', authorizeRoles('admin'),  getAllEmployeesController)
 router.get('/employee/:id', authorizeRoles('admin'),  getEmployeeByIdController)
 
