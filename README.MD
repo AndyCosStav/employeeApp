@@ -44,15 +44,15 @@ Planned areas to explore:
 ## Getting started
 
 ### Backend
-
+```bash
 cd backend
 npm install
 npm run dev
+```
 
-
-### Backend
-
+### Frontend
+```bash
 cd frontend/employee-ui
 npm install
 npm run dev
-
+```
