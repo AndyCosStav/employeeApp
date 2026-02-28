@@ -1,6 +1,6 @@
 import express from 'express'
-import { authenticateToken } from '../middleware/authenticateToken.js'
-import { authorizeRoles } from '../middleware/authorizeRoles.js'
+import { authenticateToken } from '../middleware/authenticateToken'
+import { authorizeRoles } from '../middleware/authorizeRoles'
 
 import {
   createEmployeeController,
@@ -8,7 +8,7 @@ import {
   getAllEmployeesController,
   getEmployeeByIdController,
   updateEmployeeByIdController
-} from '../controllers/employeeController.js'
+} from '../controllers/employeeController'
 
 const router = express.Router()
 

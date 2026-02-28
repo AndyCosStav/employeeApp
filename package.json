@@ -20,6 +20,11 @@
     "nodemon": "^3.1.14"
   },
   "devDependencies": {
-    "eslint": "^10.0.1"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.2",
+    "eslint": "^10.0.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

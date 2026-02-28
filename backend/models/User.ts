@@ -1,5 +1,12 @@
 import mongoose from 'mongoose';
 
+export interface UserDocument{
+  email: string
+  passwordHash: string, 
+  role: string, 
+  isActive: boolean
+}
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -26,4 +33,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model<UserDocument>('User', userSchema);

@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
-import employeeRoutes from './routes/employeeRoutes.js';
-import authRoutes from './routes/authRoutes.js';
+import employeeRoutes from './routes/employeeRoutes';
+import authRoutes from './routes/authRoutes';
 import cors from 'cors';
 
 const app = express();
@@ -14,9 +14,8 @@ const port = process.env.PORT || 8000;
 app.use(authRoutes);
 app.use(employeeRoutes);
 
-
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI || 'nothing')
   .then(() => {
     console.log('Connected to MongoDB');
   })

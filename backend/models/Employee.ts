@@ -1,5 +1,15 @@
 import mongoose from 'mongoose';
 
+
+export interface EmployeeDocument {
+  firstname: string
+  lastname: string
+  employeeNumber: number
+  department: string
+  createdAt: Date
+  updatedAt: Date
+}
+
 const employeeSchema = new mongoose.Schema(
   {
     firstname: {
@@ -28,6 +38,6 @@ const employeeSchema = new mongoose.Schema(
   }
 );
 
-const Employee = mongoose.model('Employee', employeeSchema);
+const Employee = mongoose.model<EmployeeDocument>('Employee', employeeSchema)
 
 export default Employee;

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10"
+  }
+}

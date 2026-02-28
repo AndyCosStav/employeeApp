@@ -1,12 +1,24 @@
-import express from 'express';
+import express, {Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+
+import User from '../models/User';
 
 const router = express.Router();
 
+type RegisterBody = {
+  email?: string
+  password?: string
+  role?: string
+}
 
-router.post('/auth/register', async (req, res) => {
+type LoginBody = { 
+  email?: string
+  password?: string
+}
+
+
+router.post('/auth/register', async (req: Request<{},{}, RegisterBody>, res:Response) => {
   try {
     const { email, password, role } = req.body;
 
@@ -43,17 +55,26 @@ router.post('/auth/register', async (req, res) => {
       },
     });
   } catch (error) {
+    const err = error as Error
     return res.status(500).json({
       success: false,
       message: 'Failed to register user',
-      error: error.message,
+      error: err.message,
     });
   }
 });
 
-router.post('/auth/login', async (req, res) => {
+router.post('/auth/login', async (req: Request<{},{}, LoginBody>, res:Response) => {
   try {
     const { email, password } = req.body;
+
+    if(!email){
+      throw new Error('Validation Error - email cannot be empty')
+    }
+
+        if(!password){
+      throw new Error('Validation Error - password cannot be empty')
+    }
 
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user || !user.isActive) {
@@ -71,13 +92,20 @@ router.post('/auth/login', async (req, res) => {
       });
     }
 
+
+      const jwtSecret = process.env.JWT_SECRET
+
+      if (!jwtSecret) {
+        throw new Error('JWT_SECRET is not defined')
+      }
+
     const token = jwt.sign(
       {
         sub: user._id.toString(),
         email: user.email,
         role: user.role,
       },
-      process.env.JWT_SECRET,
+      jwtSecret,
       {
         algorithm: 'HS256',
         expiresIn: '1h',
@@ -91,10 +119,11 @@ router.post('/auth/login', async (req, res) => {
       accessToken: token,
     });
   } catch (error) {
+    const err = error as Error
     return res.status(500).json({
       success: false,
       message: 'Login failed',
-      error: error.message,
+      error: err.message,
     });
   }
 });

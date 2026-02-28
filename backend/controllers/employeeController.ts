@@ -1,14 +1,34 @@
 import mongoose from 'mongoose'
+import { Request, Response } from 'express'
 import {
   createEmployee,
   deleteEmployeeById,
   getAllEmployees,
   getEmployeeById,
   updateEmployeeById
-} from '../services/employeeService.js'
+} from '../services/employeeService'
+
+type CreateEmployeeData = {
+  firstname: string
+  lastname: string
+  employeeNumber: number
+  department: string
+}
+
+type UpdateEmployeeData = {
+  firstname?: string
+  lastname?: string
+  employeeNumber?: number
+  department?: string
+}
+
+
+type MongoDuplicateKeyError = Error & {
+  code?: number
+}
 
 // POST /employee
-export async function createEmployeeController(req, res) {
+export async function createEmployeeController(req :Request<{}, {}, CreateEmployeeData>, res: Response): Promise<Response> {
   try {
     const { firstname, lastname, department } = req.body
 
@@ -28,7 +48,9 @@ export async function createEmployeeController(req, res) {
       data: createdEmployee
     })
   } catch (error) {
-    if (error.code === 11000) {
+
+    const err = error as MongoDuplicateKeyError
+    if (err.code === 11000) {
       return res.status(409).json({
         success: false,
         message: 'employeeNumber already exists'
@@ -39,13 +61,13 @@ export async function createEmployeeController(req, res) {
     return res.status(500).json({
       success: false,
       message: 'Failed to create employee',
-      error: error.message
+      error: err.message
     })
   }
 }
 
 // GET /employees
-export async function getAllEmployeesController(req, res) {
+export async function getAllEmployeesController(req :Request,res: Response): Promise<Response> {
   try {
     const employees = await getAllEmployees()
 
@@ -63,7 +85,7 @@ export async function getAllEmployeesController(req, res) {
 }
 
 // GET /employee/:id
-export async function getEmployeeByIdController(req, res) {
+export async function getEmployeeByIdController(req: Request<{id:string}>, res: Response) {
   try {
     const { id } = req.params
 
@@ -97,7 +119,7 @@ export async function getEmployeeByIdController(req, res) {
 }
 
 // DELETE /employee/:id
-export async function deleteEmployeeByIdController(req, res) {
+export async function deleteEmployeeByIdController(req: Request<{id:string}>, res: Response) {
   try {
     const { id } = req.params
 
@@ -128,7 +150,7 @@ export async function deleteEmployeeByIdController(req, res) {
 }
 
 // PATCH /employee/:id
-export async function updateEmployeeByIdController(req, res) {
+export async function updateEmployeeByIdController(req: Request<{id:string}, {}, UpdateEmployeeData>, res: Response) {
   try {
     const { id } = req.params
 
