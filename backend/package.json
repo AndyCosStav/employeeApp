@@ -4,6 +4,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.10"
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }
