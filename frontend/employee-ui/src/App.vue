@@ -65,7 +65,7 @@ onUnmounted(() => {
     </nav>
 
     <main class="page-content">
-      <!-- optional: listen for successful login navigation and refresh auth state -->
+
       <RouterView @vue:mounted="syncAuthState" />
     </main>
   </div>
